@@ -1,0 +1,21 @@
+{
+  "name": "mi-primer-proyecto-node",
+  "version": "1.0.0",
+  "description": "This is my firs node project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "dev",
+    "start": "node index.js",
+    "hola": "echo `hola mundo`",
+    "Mi-primer-proyecto-node": "ls"
+  },
+  "keywords": [
+    "node"
+  ],
+  "author": "flowery",
+  "license": "ISC",
+  "dependencies": {
+    "prompt-sync": "^4.2.0"
+  }
+}
