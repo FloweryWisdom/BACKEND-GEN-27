@@ -20,3 +20,5 @@ const practiceSchema = new mongoose.Schema({
 })
 
 module.exports = mongoose.model("practice", practiceSchema) 
+
+// Hello jimmy this is just  sample text to see if the letter spacing is adequate or if 
