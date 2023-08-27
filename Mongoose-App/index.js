@@ -6,8 +6,8 @@ const koderSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
-    minLenght: 2,
-    maxLenght: 50,
+    minLength: 2,
+    maxLength: 50,
   },
   age: {
     type: Number,
