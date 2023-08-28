@@ -2,35 +2,55 @@ const express = require("express")
 const kodersUseCase = require("../usecases/koders.usecase")
 const router = express.Router()
 
-/*
-// List all koders
-router.get("/", (request, response) => {
-    const allKoders = kodersUseCase.getAll()
+
+// List all koders -- GET
+router.get("/", async (request, response) => {
+    const allKoders = await kodersUseCase.getAll()
 
     response.json({
-        message: "Get Koders!",
-        koders: allKoders
+        message: "Koders List:",
+        data: {
+            koders: allKoders
+        }
     })
 })
 
-// Create a koder 
-router.post("/", (request, response) => {
-    const {name, email, program, generation} = request.body
-    
-    kodersUseCase.create(name, email, program, generation)
+// Create a koder -- POST
+router.post("/", async (request, response) => {
 
-    response.json({
-        message: "Koder added"
-    })
+    try {
+        const koderData = request.body
+        const newKoder = await kodersUseCase.create(koderData)
+        
+        response.status(201)
+        response.json({
+            message: "Koder Created",
+            data: {
+                koder: newKoder
+            }
+        })
+        
+    } catch (error) {
+        response.status(500)
+        response.json({
+            message: "Something went wrong",
+            error: error
+        })
+    }
+
 })
 
-// Delete a koder 
-router.delete("/:name", (request, response) => {
-    const {name} = request.params
-    kodersUseCase.remove(name)
-    response.json({message: "DELETED koder"})
+// List koder by id -- GET
+router.get("/:id", async (request, response) => {
+    const {id} = request.params
+    koder = await kodersUseCase.getById(id)
+    if (!koder) {
+        return response.status(404).json({message: "Koder not found."})
+    }
+    response.json({
+        message: `Koder ${id}`,
+        data: {koder} })
 })
 
 module.exports = router
 
-*/
