@@ -50,6 +50,7 @@ router.post("/", async (request, response) => {
 
 })
 
+
 // Update the information of a koder -- PATCH
 router.patch("/:id", async (request, response) => {
     try {
@@ -75,6 +76,7 @@ router.patch("/:id", async (request, response) => {
     }
 })
 
+
 // List koder by id -- GET
 router.get("/:id", async (request, response) => {
     try {
@@ -96,7 +98,6 @@ router.get("/:id", async (request, response) => {
     }
 
 })
-
 
 
 
