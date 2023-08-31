@@ -17,6 +17,7 @@ router.get("/", async (request, response) => {
 
 // Create a koder -- POST
 router.post("/", async (request, response) => {
+    Koder.validate(koderData)
 
     try {
         const koderData = request.body
