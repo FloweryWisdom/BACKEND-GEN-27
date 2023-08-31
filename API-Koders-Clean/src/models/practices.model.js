@@ -4,6 +4,8 @@ const practiceSchema = new mongoose.Schema({
   title: {
     type: String,
     required: true,
+    minLength: 2,
+    maxLength: 50,
     trim: true
   },
   repo: {
@@ -13,7 +15,7 @@ const practiceSchema = new mongoose.Schema({
     trim: true
   },
   koder: {
-    type: mongoose.SchemaType.ObjectId,
+    type: mongoose.SchemaTypes.ObjectId,
     required: true,
     trim: true,
     ref: "koder",

@@ -107,7 +107,7 @@ router.delete("/:id", async (request, response) => {
     } catch (error) {
       response.status(error.status || 500)
       response.json({
-        messge: "Something went wrong",
+        message: "Something went wrong",
         error: error.message
       })
     }
