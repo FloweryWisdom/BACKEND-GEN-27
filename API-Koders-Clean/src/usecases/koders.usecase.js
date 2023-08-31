@@ -67,7 +67,9 @@ async function deleteById(id) {
     if (!mongoose.isValidObjectId(id)) {
         throw new createError(400, "Invalid Koder ID")
     }
+
     const koderDeleted = await koderModel.findByIdAndDelete(id)
+
     if (!koderDeleted) {
         throw new createError(404, "Koder not found")
     }
