@@ -1,5 +1,5 @@
 const express = require("express")
-const practiceUseCase = require("../usecases/practice.usecase")
+const practiceUseCase = require("../usecases/practices.usecase")
 const router = express.Router()
 
 // List all practices -- GET
@@ -21,6 +21,7 @@ router.get("/", async (request, response) => {
         })
     }
 })
+
 
 // Create a practice -- POST
 router.post("/", async (request, response) => {
@@ -45,9 +46,51 @@ router.post("/", async (request, response) => {
     }
 })
 
+// Update the information of a practice -- PATCH
+router.patch("/:id", async (request, response) => {
+    try {
+        const {id} = request.params
+        const updateData = request.body
+
+        const modifiedPractice = await practiceUseCase.updatePracticeData(id, updateData)
+
+        response.json({
+            message: "Practice Data Updated",
+            data: {
+                practice: modifiedPractice
+            }
+        })
+
+    } catch (error) {
+        response.status(error.status || 500)
+        response.json({
+            message: "Something went wrong.",
+            error: error.message 
+        })
+    }
+})
 
 
-
+// List practice by id -- GET 
+router.get("/:id", async (request, response) => {
+    try {
+        const {id} = request.params
+        practice = await practiceUseCase.getById(id)
+        if (!practice) {
+            return response.status(404).json({message: "Practice not found"})
+        }
+        response.json({
+            message: "Search by ID result: ",
+            data: {practice}
+        })
+    } catch (error) {
+        response.status(error.status || 500)
+        response.json({
+            message: "Something went wrong.",
+            error: error.message
+        })
+    }
+})
 
 
 // Delete a practice -- DELETE 

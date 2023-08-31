@@ -86,8 +86,8 @@ router.get("/:id", async (request, response) => {
         }
         response.json({
             message: `Search by ID result: `,
-            data: {koder} })
-
+            data: {koder} 
+        })
     } catch (error) {
         response.status(error.status || 500)
         response.json({
@@ -99,7 +99,7 @@ router.get("/:id", async (request, response) => {
 })
 
 
-
+// Delete the data of a koder via id -- DELETE
 router.delete("/:id", async (request, response) => {  
     try {
         const {id} = request.params

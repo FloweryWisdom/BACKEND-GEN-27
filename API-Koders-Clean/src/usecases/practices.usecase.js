@@ -1,4 +1,4 @@
-const practiceModel = require("../models/practice.model")
+const practiceModel = require("../models/practices.model")
 const mongoose = require("mongoose")
 const createError = require("http-errors")
 
@@ -60,7 +60,7 @@ async function deleteById(id) {
 }
 
 module.exports = {
-    getAll,
+    getAll, 
     create,
     updatePracticeData,
     getById,
