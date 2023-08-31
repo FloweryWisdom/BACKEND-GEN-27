@@ -1,4 +1,5 @@
 const mongoose = require("mongoose")
+
 const practiceSchema = new mongoose.Schema({
   title: {
     type: String,

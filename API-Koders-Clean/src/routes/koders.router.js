@@ -26,8 +26,6 @@ router.get("/", async (request, response) => {
 
 // Create a koder -- POST
 router.post("/", async (request, response) => {
-    Koder.validate(koderData)
-
     try {
         const koderData = request.body
         const newKoder = await kodersUseCase.create(koderData)
@@ -50,6 +48,7 @@ router.post("/", async (request, response) => {
     }
 
 })
+
 
 // Update the information of a koder -- PATCH
 router.patch("/:id", async (request, response) => {
@@ -88,7 +87,7 @@ router.get("/:id", async (request, response) => {
             message: `Search by ID result: `,
             data: {koder} })
 
-    } catch(error) {
+    } catch (error) {
         response.status(error.status || 500)
         response.json({
             message: "Something went wrong.",
@@ -105,14 +104,14 @@ router.delete("/:id", async (request, response) => {
     try {
         const {id} = request.params
         const koderDeleted = await kodersUseCase.deleteById(id)
-    response.json({
+        response.json({
         message: "Koder Deleted",
         data: {
             koder: koderDeleted
         }
     })        
     } catch (error) {
-        response.status(error.status || 500),
+        response.status(error.status || 500)
         response.json({
             message: "Something went wrong",
             error: error.message
