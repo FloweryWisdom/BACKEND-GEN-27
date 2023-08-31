@@ -5,14 +5,23 @@ const router = express.Router()
 
 // List all koders -- GET
 router.get("/", async (request, response) => {
-    const allKoders = await kodersUseCase.getAll()
-
-    response.json({
-        message: "Koders List:",
-        data: {
-            koders: allKoders
-        }
-    })
+    try {
+        const allKoders = await kodersUseCase.getAll()
+    
+        response.json({
+            message: "Koders List:",
+            data: {
+                koders: allKoders
+            }
+        })
+        
+    } catch (error) {
+        response.status(500)
+        response.json({
+            message: "Something went wrong",
+            error: error.message
+        })
+    }
 })
 
 // Create a koder -- POST
@@ -31,26 +40,84 @@ router.post("/", async (request, response) => {
         })
         
     } catch (error) {
-        response.status(500)
+        const status = error.name === "ValidationError" ? 400 : 500
+        response.status(status)
         response.json({
             message: "Something went wrong",
-            error: error
+            error: error.message
         })
     }
 
 })
 
+// Update the information of a koder -- PATCH
+router.patch("/:id", async (request, response) => {
+    try {
+        const {id} = request.params
+        const updatedData = request.body
+
+        const modifiedKoder = await kodersUseCase.updateKoderData(id, updatedData)
+
+        response.json({
+            message: "Koder Data Updated",
+            data: {
+                koder: modifiedKoder
+            }
+        })
+        
+    } catch (error) {
+        response.status(error.status || 500)
+        response.json({
+            message: "Something went wrong",
+            error: error.message
+        })
+        
+    }
+})
+
 // List koder by id -- GET
 router.get("/:id", async (request, response) => {
-    const {id} = request.params
-    koder = await kodersUseCase.getById(id)
-    if (!koder) {
-        return response.status(404).json({message: "Koder not found."})
+    try {
+        const {id} = request.params
+        koder = await kodersUseCase.getById(id)
+        if (!koder) {
+            return response.status(404).json({message: "Koder not found."})
+        }
+        response.json({
+            message: `Search by ID result: `,
+            data: {koder} })
+
+    } catch(error) {
+        response.status(error.status || 500)
+        response.json({
+            message: "Something went wrong.",
+            error: error.message
+        })
     }
+
+})
+
+
+
+
+router.delete("/:id", async (request, response) => {  
+    try {
+        const {id} = request.params
+        const koderDeleted = await kodersUseCase.deleteById(id)
     response.json({
-        message: `Koder ${id}`,
-        data: {koder} })
+        message: "Koder Deleted",
+        data: {
+            koder: koderDeleted
+        }
+    })        
+    } catch (error) {
+        response.status(error.status || 500),
+        response.json({
+            message: "Something went wrong",
+            error: error.message
+        })
+    }
+
 })
 
 module.exports = router
-
