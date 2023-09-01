@@ -66,7 +66,8 @@ router.patch("/:id", async (request, response) => {
         })
         
     } catch (error) {
-        response.status(error.status || 500)
+        const status = error.name === "ValidationError" ? 400 : 500
+        response.status(error.status || status)
         response.json({
             message: "Something went wrong",
             error: error.message

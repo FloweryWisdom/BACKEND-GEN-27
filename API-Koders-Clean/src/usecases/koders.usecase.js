@@ -37,7 +37,10 @@ async function updateKoderData(id, updatedData) {
     if (!mongoose.isValidObjectId(id)) {
         throw new createError(400, "Invalid Koder ID")
     }
-    const modifiedKoder = await koderModel.findByIdAndUpdate(id, updatedData,  { new: true })
+    const modifiedKoder = await koderModel.findByIdAndUpdate(id, updatedData,  { 
+        new: true,
+        runValidators: true 
+    })
 
     if(!modifiedKoder) {
         throw new createError(404, "Koder not found")
