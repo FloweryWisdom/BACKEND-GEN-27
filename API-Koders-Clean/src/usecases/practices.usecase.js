@@ -5,7 +5,7 @@ const koderModel = require("../models/koders.model")
 
 // GET /practices 
 async function getAll() {
-    const allPractices = await practiceModel.find()
+    const allPractices = await practiceModel.find().populate(`koder`)
     return allPractices
 }
 
@@ -30,9 +30,24 @@ async function create(practiceData) {
 
 async function updatePracticeData(id, updateData) {
     if (!mongoose.isValidObjectId(id)) {
-        throw new createError(400, "Invalid Koder ID")
+        throw new createError(400, "Invalid Practice ID")
     }
-    const modifiedPractice = await practiceModel.findByIdAndUpdate(id, updateData, {new: true})
+
+    if (updateData.koder) {
+        //throw new createError(403, "This is forbidden")
+        if (!mongoose.isValidObjectId(updateData.koder)) {
+            throw new createError(400, "Invalid Koder ID") 
+        }
+        const koder = await koderModel.findById(updateData.koder)
+        if (!koder) {
+            throw new createError(404, "Koder not found.")
+        }
+    }
+
+    const modifiedPractice = await practiceModel.findByIdAndUpdate(id, updateData, {
+        new: true,
+        runValidators: true
+    })
 
     if (!modifiedPractice) {
         throw new createError(404, "Practice not found")
