@@ -31,6 +31,11 @@ const koderSchema = new mongoose.Schema({
     enum: ["javascript", "python", "ios"],
     required: true,
     trim: true
+  },
+  created: {
+    type: Date,
+    required: true,
+    default: new Date(),
   }
 })
 
