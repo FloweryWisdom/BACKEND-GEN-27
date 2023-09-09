@@ -28,7 +28,7 @@ const practiceSchema = new mongoose.Schema({
   updated: {
     type: Date,
     required: true,
-    default: new Date()
+    default: new Date(  )
   }
 })
 
