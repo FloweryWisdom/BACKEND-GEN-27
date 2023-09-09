@@ -32,6 +32,16 @@ const koderSchema = new mongoose.Schema({
     required: true,
     trim: true
   },
+  created: {
+    type: Date, 
+    required: true,
+    default: new Date(),
+  },
+  updated: {
+    type: Date,
+    required: true,
+    defautl: new Date()
+  }
 })
 
 

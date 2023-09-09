@@ -19,6 +19,16 @@ const practiceSchema = new mongoose.Schema({
     required: true,
     trim: true,
     ref: "koder",
+  },
+  created: {
+    type: Date,
+    required: true,
+    default: new Date()
+  },
+  updated: {
+    type: Date,
+    required: true,
+    default: new Date()
   }
 })
 

@@ -44,6 +44,8 @@ async function updatePracticeData(id, updateData) {
         }
     }
 
+    updateData.updated = new Date()
+
     const modifiedPractice = await practiceModel.findByIdAndUpdate(id, updateData, {
         new: true,
         runValidators: true
