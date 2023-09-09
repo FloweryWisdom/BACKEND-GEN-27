@@ -23,12 +23,12 @@ const practiceSchema = new mongoose.Schema({
   created: {
     type: Date,
     required: true,
-    default: new Date(),
+    default: new Date()
   },
   updated: {
     type: Date,
     required: true,
-    default: new Date(  )
+    default: new Date()
   }
 })
 
