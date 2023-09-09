@@ -31,7 +31,7 @@ const koderSchema = new mongoose.Schema({
     enum: ["javascript", "python", "ios"],
     required: true,
     trim: true
-  }
+  },
 })
 
 
