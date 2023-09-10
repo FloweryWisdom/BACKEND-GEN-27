@@ -5,7 +5,8 @@ const router = express.Router()
 // List all practices -- GET
 router.get("/", async (request, response) => {
     try {
-        const allPractices = await practiceUseCase.getAll()
+        const titleFilter = request.query.title
+        const allPractices = await practiceUseCase.getAll(titleFilter)
 
         response.json({
             message: "Practices List:",

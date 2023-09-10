@@ -4,9 +4,14 @@ const createError = require("http-errors")
 const koderModel = require("../models/koders.model")
 
 // GET /practices 
-async function getAll() {
-    const allPractices = await practiceModel.find().populate(`koder`)
-    return allPractices
+async function getAll(titleFilter) {
+    const filters = {}
+
+    if (titleFilter) {
+        filters.title = new RegExp(titleFilter, "i")
+    }
+
+    return await practiceModel.find(filters).populate(`koder`)
 }
 
 // POST /practices 
