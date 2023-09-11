@@ -4,7 +4,8 @@ const createError = require("http-errors")
 const koderModel = require("../models/koders.model")
 
 // GET /practices 
-async function getAll() {
+async function getAll(titleFilter) {
+    const filter = {}
     const allPractices = await practiceModel.find().populate(`koder`)
     return allPractices
 }
