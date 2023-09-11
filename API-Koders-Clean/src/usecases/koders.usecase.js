@@ -1,6 +1,7 @@
 const koderModel = require("../models/koders.model")
 const mongoose = require("mongoose")
 const createError = require("http-errors")
+const bcrypt = require("bcryptjs")
 
 // GET /koders
 async function getAll() {
@@ -10,24 +11,16 @@ async function getAll() {
 
 // POST /koders
 async function create(koderData) {
-   
-   
-// COMMENTED THE BELOW SECTION OF CODE FOR NOW TO CHECK ON VALIDATION PROCESS USING MONGOOSE LATER.
-    /*  // This creates a new koder object in memory.
-    const newKoder = await new Koder(koderData)
+    //validate if "koder" exists
+    const existingKoder = await koderModel.findOne({ email: koderData.email})
 
-    // We validate the koder data type.
-    const validationError = newKoder.validateSync()
-    console.log("Koder is valid.", validationError)
-
-    // This throws an error if invalid.
-    if (validationError) {
-        throw new Error("Invalid Koder")
+    if (existingKoder) {
+        throw new createError(400, "Koder already exists")
     }
 
-    // Saves files if data type valid.
-    await newKoder.save() */
-
+    //save enkrypted password
+    koderData.password = await bcrypt.encrypt(koderData.password)
+    
     const newKoder = await koderModel.create(koderData)
     return newKoder
 }
