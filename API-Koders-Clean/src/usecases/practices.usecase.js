@@ -4,9 +4,18 @@ const createError = require("http-errors")
 const koderModel = require("../models/koders.model")
 
 // GET /practices 
-async function getAll(titleFilter) {
-    const filter = {}
-    const allPractices = await practiceModel.find().populate(`koder`)
+async function getAll(titleFilter, koder) {
+    const filters = {}
+
+    if (titleFilter) {
+        filters.title = new RegExp(titleFilter, "i")
+    }
+    
+    if (koder && mongoose.isValidObjectId(koder)) {
+        filters.koder = koder
+    }
+
+    const allPractices = await practiceModel.find(filters).populate(`koder`)
     return allPractices
 }
 

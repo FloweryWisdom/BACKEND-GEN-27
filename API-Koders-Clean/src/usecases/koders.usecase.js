@@ -1,7 +1,7 @@
 const koderModel = require("../models/koders.model")
 const mongoose = require("mongoose")
 const createError = require("http-errors")
-const bcrypt = require("bcryptjs")
+const bcrypt = require("../lib/bcrypt")
 
 // GET /koders
 async function getAll() {
@@ -15,14 +15,13 @@ async function create(koderData) {
     const existingKoder = await koderModel.findOne({ email: koderData.email})
 
     if (existingKoder) {
-        throw new createError(400, "Koder already exists")
+        throw new createError(412, "Email already registered")
     }
 
-    //save enkrypted password
-    koderData.password = await bcrypt.encrypt(koderData.password)
+    //save encrypted password
+    koderData.password = bcrypt.encrypt(koderData.password)
     
-    const newKoder = await koderModel.create(koderData)
-    return newKoder
+    return newKoder = await koderModel.create(koderData)
 }
 
 // PATCH /koders/:id
@@ -30,7 +29,7 @@ async function updateKoderData(id, updatedData) {
     if (!mongoose.isValidObjectId(id)) {
         throw new createError(400, "Invalid Koder ID")
     }
-
+ 
     updatedData.updated = new Date()
 
     const modifiedKoder = await koderModel.findByIdAndUpdate(id, updatedData,  { 
