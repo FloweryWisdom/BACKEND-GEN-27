@@ -40,7 +40,7 @@ const koderSchema = new mongoose.Schema({
   updated: {
     type: Date,
     required: true,
-    defautl: new Date()
+    default: new Date()
   }
 })
 

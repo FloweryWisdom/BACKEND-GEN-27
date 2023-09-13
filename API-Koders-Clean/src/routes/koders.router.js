@@ -96,7 +96,6 @@ router.get("/:id", async (request, response) => {
             error: error.message
         })
     }
-
 })
 
 

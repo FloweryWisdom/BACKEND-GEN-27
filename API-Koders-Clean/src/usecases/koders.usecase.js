@@ -12,15 +12,21 @@ async function getAll() {
 // POST /koders
 async function create(koderData) {
     //validate if "koder" exists
-    const existingKoder = await koderModel.findOne({ email: koderData.email})
+    const existingKoder = await koderModel.findOne({email: koderData.email})
 
     if (existingKoder) {
         throw new createError(412, "Email already registered")
     }
 
+    const passwordRegex = new RegExp(`^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$`)
+    if (!passwordRegex.test(koderData.password)) {
+        throw new createError(400, "Password must have at least 8 characters, one uppercase, one lowercase, one number and one special character")
+    }
+    
+    
     //save encrypted password
     koderData.password = bcrypt.encrypt(koderData.password)
-    
+
     return newKoder = await koderModel.create(koderData)
 }
 

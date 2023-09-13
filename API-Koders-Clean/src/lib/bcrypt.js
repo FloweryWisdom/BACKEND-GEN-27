@@ -1,11 +1,11 @@
 const bcryptjs = require("bcryptjs")
 
 
-const saltRound = 10
+const saltRounds = 10
 
 //encrypt is a function that receives a text and returns a hash
 function encrypt (text) {
-  return bcryptjs.hashSync(text, saltRound)
+  return bcryptjs.hashSync(text, saltRounds)
 }
 
 //verify is a function that receives a hash and a text and returns a boolean
