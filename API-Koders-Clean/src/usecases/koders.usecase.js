@@ -18,7 +18,7 @@ async function create(koderData) {
         throw new createError(412, "Email already registered")
     }
 
-    const passwordRegex = new RegExp(`^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$`)
+    const passwordRegex = new RegExp(`^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-.+]).{8,}$`)
     if (!passwordRegex.test(koderData.password)) {
         throw new createError(400, "Password must have at least 8 characters, one uppercase, one lowercase, one number and one special character")
     }
