@@ -1,10 +1,12 @@
 const express = require("express")
 const kodersUseCase = require("../usecases/koders.usecase")
+const authMiddleware = require("../middlewares/auth.middleware")
+
 const router = express.Router()
 
 
 // List all koders -- GET
-router.get("/", async (request, response) => {
+router.get("/", authMiddleware, async (request, response) => {
     try {
         const allKoders = await kodersUseCase.getAll()
     
